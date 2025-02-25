@@ -91,8 +91,8 @@ func GetPopulationData(countryCode string, limit string) (*models.PopulationResp
 		if yOK && vOK {
 			if (startYear == 0 && endYear == 0) || (year >= float64(startYear) && year <= float64(endYear)) {
 				values = append(values, models.PopulationValue{Year: int(year), Value: int(value)})
-				total += int(value) // 🎯 Summer verdiene for å beregne gjennomsnitt
-				count++             // 🎯 Tell hvor mange verdier vi har
+				total += int(value)
+				count++
 			}
 		}
 	}
