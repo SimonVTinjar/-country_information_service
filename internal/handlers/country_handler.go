@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"Country_Information_Service/services"
+	"Country_Information_Service/internal/services"
 	"encoding/json"
 	"net/http"
 	"strings"
@@ -10,6 +10,10 @@ import (
 // CountryInfoHandler håndterer forespørselen og returnerer landinformasjon
 func CountryInfoHandler(w http.ResponseWriter, r *http.Request) {
 	countryCode := strings.TrimPrefix(r.URL.Path, "/countryinfo/v1/info/")
+	if countryCode == "" {
+		http.Error(w, "Manglende landkode", http.StatusBadRequest)
+		return
+	}
 
 	countryInfo, err := services.GetCountryInfo(countryCode)
 	if err != nil {
