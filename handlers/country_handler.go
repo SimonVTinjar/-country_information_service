@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"Country_Information_Service/internal/services"
+	"Country_Information_Service/services"
 	"encoding/json"
 	"net/http"
 	"strings"

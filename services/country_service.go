@@ -1,8 +1,8 @@
 package services
 
 import (
-	"Country_Information_Service/internal/models"
-	"Country_Information_Service/pkg/utils"
+	"Country_Information_Service/models"
+	"Country_Information_Service/utils"
 	"encoding/json"
 	"fmt"
 )

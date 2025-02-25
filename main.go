@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"Country_Information_Service/internal/handlers"
+	"Country_Information_Service/handlers"
 )
 
 func main() {
