@@ -3,8 +3,10 @@ package services
 import (
 	"Country_Information_Service/internal/models"
 	"Country_Information_Service/utils"
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strings"
 )
 
@@ -47,6 +49,11 @@ func GetCountryInfo(countryCode string) (*models.CountryInfoResponse, error) {
 			borders = append(borders, border.(string))
 		}
 	}
+	// Hent liste over byer fra CountriesNow API
+	cities, err := GetCitiesByCountry(name)
+	if err != nil {
+		cities = []string{"Ukjente byer"} // Standardverdi hvis API-kall feiler
+	}
 
 	// Opprett responsstruktur
 	return &models.CountryInfoResponse{
@@ -57,7 +64,38 @@ func GetCountryInfo(countryCode string) (*models.CountryInfoResponse, error) {
 		Borders:    borders,
 		Flag:       flag,
 		Capital:    capital,
+		Cities:     cities,
 	}, nil
+}
+
+func GetCitiesByCountry(countryName string) ([]string, error) {
+	apiURL := "http://129.241.150.113:3500/api/v0.1/countries/cities"
+	requestBody, err := json.Marshal(map[string]string{"country": countryName})
+	if err != nil {
+		return nil, fmt.Errorf("Kunne ikke lage forespørsel: %v", err)
+	}
+
+	resp, err := http.Post(apiURL, "application/json", bytes.NewBuffer(requestBody))
+	if err != nil {
+		return nil, fmt.Errorf("Kunne ikke sende forespørsel: %v", err)
+	}
+	defer resp.Body.Close()
+
+	var result struct {
+		Error bool     `json:"error"`
+		Msg   string   `json:"msg"`
+		Data  []string `json:"data"`
+	}
+
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return nil, fmt.Errorf("Kunne ikke tolke respons: %v", err)
+	}
+
+	if result.Error {
+		return nil, fmt.Errorf("Feil fra API: %s", result.Msg)
+	}
+
+	return result.Data, nil
 }
 
 // GetCountryNameFromCode henter landets fulle navn fra ISO 2-kode via RestCountries API
@@ -109,6 +147,6 @@ func GetCountryDetails(countryCode string) (string, string, string, error) {
 	officialName, _ := apiResponse[0]["name"].(map[string]interface{})["official"].(string)
 	iso3, _ := apiResponse[0]["cca3"].(string)
 
-	// 🎯 Returner commonName for alle andre land
+	// Returner commonName for alle andre land
 	return commonName, iso3, officialName, nil
 }
