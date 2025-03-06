@@ -110,9 +110,6 @@ This service is hosted on **Render**, which automatically redeploys changes from
    ```
 2. Render will automatically detect and redeploy the changes.
 
-## License
-This project is open-source and licensed under the MIT License.
 
-## Author
-Developed by **Your Name** as part of an academic assignment.
+
 
