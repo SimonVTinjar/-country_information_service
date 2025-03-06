@@ -22,7 +22,7 @@ https://your-render-app-url.onrender.com
 - **Description:** Retrieves detailed information about a country based on its ISO 2-code.
 - **Example Request:**
   ```sh
-  curl -X GET "https://your-render-app-url.onrender.com/countryinfo/v1/info/NO"
+  curl -X GET "https://country-information-service-pack.onrender.com/countryinfo/v1/info/NO"
   ```
 - **Example Response:**
   ```json
@@ -53,7 +53,7 @@ https://your-render-app-url.onrender.com
 - **Description:** Fetches historical population data for a given country.
 - **Example Request:**
   ```sh
-  curl -X GET "https://your-render-app-url.onrender.com/countryinfo/v1/population/NO"
+  curl -X GET "https://country-information-service-pack.onrender.com/countryinfo/v1/population/NO"
   ```
 
 ### 3. Check API Status
@@ -69,11 +69,11 @@ https://your-render-app-url.onrender.com
 ### Setup Steps
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/Country_Information_Service.git
+   git clone https://github.com/SimonVTinjar/-Country_Information_Service.git
    ```
 2. Navigate to the project folder:
    ```sh
-   cd Country_Information_Service
+   cd -Country_Information_Service
    ```
 3. Install dependencies:
    ```sh
